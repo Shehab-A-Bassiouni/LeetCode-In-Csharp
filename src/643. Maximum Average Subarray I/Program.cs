@@ -12,7 +12,7 @@ internal class Program
         Console.WriteLine($"For Test Case 1 Answer Is {sol1}");
 
         int k2 = 1;
-        int[] nums2 = [5];
+        int[] nums2 = [-1];
         var sol2 = FindMaxAverage(nums2, k2);
         Console.WriteLine(value: $"For Test Case 2 Answer Is {sol2}");
 
@@ -20,28 +20,27 @@ internal class Program
 
     public static double FindMaxAverage(int[] nums, int k)
     {
-        double res = 0;
+        double res = double.MinValue;
+        double sum = 0;
+
         int ctr = k;
         int leftPtr = 0;
         int rightPtr = 0;
 
-        while(rightPtr != nums.Length)
+        while(rightPtr < nums.Length)
         {
-            double temp = res;
-
             if (ctr > 0)
             {
-                temp += nums[rightPtr++];
+                sum += nums[rightPtr++];
                 ctr--;
             }
-
-            else
+            if (ctr == 0) 
             {
-                if ((temp / 4.0) > res)
-                    res = temp / 4.0;
+                double tempRes = sum / k;
+                if (tempRes > res)
+                    res = tempRes;
 
-                temp -= nums[leftPtr++];
-                temp += nums[leftPtr];
+                sum -= nums[leftPtr++];
                 ctr++;
             }
         }
